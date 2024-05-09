@@ -7,19 +7,19 @@ import { gql } from "graphql-tag";
 const typeDefs = gql`
   type Query {
     users: [User]
-    userById(id: String!): User
+    userById(id: ID!): User
   }
   type User {
-    id: String
+    id: ID
     evaluations: [Evaluation]
   }
   type Evaluation {
-    id: String
+    id: ID
     alerts: [String]
   }
   type Mutation {
-    dropAlertFromEval(evaluationId: String!, alert: String!): Evaluation
-    addAlertToEval(evaluationId: String!, alert: String!): Evaluation
+    dropAlertFromEval(evaluationId: ID!, alert: String!): Evaluation
+    addAlertToEval(evaluationId: ID!, alert: String!): Evaluation
   }
 `;
 

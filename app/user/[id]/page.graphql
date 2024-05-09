@@ -8,7 +8,7 @@ query GetUsers {
   }
 }
 
-query GetUser($id: String!) {
+query GetUser($id: ID!) {
   userById(id: $id) {
     id
     evaluations {
@@ -18,14 +18,14 @@ query GetUser($id: String!) {
   }
 }
 
-mutation AddAlert($evaluationId: String!, $alert: String!) {
+mutation AddAlert($evaluationId: ID!, $alert: String!) {
   addAlertToEval(evaluationId: $evaluationId, alert: $alert) {
     id
     alerts
   }
 }
 
-mutation DropAlert($evaluationId: String!, $alert: String!) {
+mutation DropAlert($evaluationId: ID!, $alert: String!) {
   dropAlertFromEval(evaluationId: $evaluationId, alert: $alert) {
     id
     alerts

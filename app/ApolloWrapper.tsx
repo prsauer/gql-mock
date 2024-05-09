@@ -1,8 +1,6 @@
 "use client";
-// ^ this file needs the "use client" pragma
 
 import {
-  ApolloLink,
   HttpLink,
   ApolloClient,
   ApolloProvider,
@@ -16,7 +14,7 @@ const apolloClient = new ApolloClient({
   cache: new InMemoryCache(),
   connectToDevTools: true,
 });
-// you need to create a component to wrap your app in
+
 export function ApolloWrapper({ children }: React.PropsWithChildren) {
   return <ApolloProvider client={apolloClient}>{children}</ApolloProvider>;
 }

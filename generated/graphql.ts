@@ -20,7 +20,7 @@ export type Scalars = {
 export type Evaluation = {
   __typename?: 'Evaluation';
   alerts?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
-  id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
 };
 
 export type Mutation = {
@@ -32,13 +32,13 @@ export type Mutation = {
 
 export type MutationAddAlertToEvalArgs = {
   alert: Scalars['String']['input'];
-  evaluationId: Scalars['String']['input'];
+  evaluationId: Scalars['ID']['input'];
 };
 
 
 export type MutationDropAlertFromEvalArgs = {
   alert: Scalars['String']['input'];
-  evaluationId: Scalars['String']['input'];
+  evaluationId: Scalars['ID']['input'];
 };
 
 export type Query = {
@@ -49,13 +49,13 @@ export type Query = {
 
 
 export type QueryUserByIdArgs = {
-  id: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 };
 
 export type User = {
   __typename?: 'User';
   evaluations?: Maybe<Array<Maybe<Evaluation>>>;
-  id?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
 };
 
 export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
@@ -64,14 +64,14 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type GetUsersQuery = { __typename?: 'Query', users?: Array<{ __typename?: 'User', id?: string | null, evaluations?: Array<{ __typename?: 'Evaluation', id?: string | null, alerts?: Array<string | null> | null } | null> | null } | null> | null };
 
 export type GetUserQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  id: Scalars['ID']['input'];
 }>;
 
 
 export type GetUserQuery = { __typename?: 'Query', userById?: { __typename?: 'User', id?: string | null, evaluations?: Array<{ __typename?: 'Evaluation', id?: string | null, alerts?: Array<string | null> | null } | null> | null } | null };
 
 export type AddAlertMutationVariables = Exact<{
-  evaluationId: Scalars['String']['input'];
+  evaluationId: Scalars['ID']['input'];
   alert: Scalars['String']['input'];
 }>;
 
@@ -79,7 +79,7 @@ export type AddAlertMutationVariables = Exact<{
 export type AddAlertMutation = { __typename?: 'Mutation', addAlertToEval?: { __typename?: 'Evaluation', id?: string | null, alerts?: Array<string | null> | null } | null };
 
 export type DropAlertMutationVariables = Exact<{
-  evaluationId: Scalars['String']['input'];
+  evaluationId: Scalars['ID']['input'];
   alert: Scalars['String']['input'];
 }>;
 
@@ -131,7 +131,7 @@ export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery
 export type GetUsersSuspenseQueryHookResult = ReturnType<typeof useGetUsersSuspenseQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
 export const GetUserDocument = gql`
-    query GetUser($id: String!) {
+    query GetUser($id: ID!) {
   userById(id: $id) {
     id
     evaluations {
@@ -175,7 +175,7 @@ export type GetUserLazyQueryHookResult = ReturnType<typeof useGetUserLazyQuery>;
 export type GetUserSuspenseQueryHookResult = ReturnType<typeof useGetUserSuspenseQuery>;
 export type GetUserQueryResult = Apollo.QueryResult<GetUserQuery, GetUserQueryVariables>;
 export const AddAlertDocument = gql`
-    mutation AddAlert($evaluationId: String!, $alert: String!) {
+    mutation AddAlert($evaluationId: ID!, $alert: String!) {
   addAlertToEval(evaluationId: $evaluationId, alert: $alert) {
     id
     alerts
@@ -210,7 +210,7 @@ export type AddAlertMutationHookResult = ReturnType<typeof useAddAlertMutation>;
 export type AddAlertMutationResult = Apollo.MutationResult<AddAlertMutation>;
 export type AddAlertMutationOptions = Apollo.BaseMutationOptions<AddAlertMutation, AddAlertMutationVariables>;
 export const DropAlertDocument = gql`
-    mutation DropAlert($evaluationId: String!, $alert: String!) {
+    mutation DropAlert($evaluationId: ID!, $alert: String!) {
   dropAlertFromEval(evaluationId: $evaluationId, alert: $alert) {
     id
     alerts

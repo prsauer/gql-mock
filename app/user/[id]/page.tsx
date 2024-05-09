@@ -5,6 +5,7 @@ import {
   useDropAlertMutation,
   useGetUserQuery,
 } from "@/generated/graphql";
+import { useApolloClient } from "@apollo/client";
 import { useParams } from "next/navigation";
 
 const AddMutator = ({
@@ -64,8 +65,9 @@ export default function Page() {
       id: params.id as string,
     },
   });
+  const client = useApolloClient();
+  console.log(client.cache);
 
-  console.log(params, query);
   const user = query.data?.userById;
   return (
     <div>
