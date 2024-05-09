@@ -15,13 +15,31 @@ const typeDefs = gql`
   }
   type Evaluation {
     id: ID
-    alerts: [String]
+    alerts: [Alert]
+  }
+  type Alert {
+    id: ID
   }
   type Mutation {
-    dropAlertFromEval(evaluationId: ID!, alert: String!): Evaluation
-    addAlertToEval(evaluationId: ID!, alert: String!): Evaluation
+    dropAlertFromEval(evaluationId: ID!, alertId: ID!): Evaluation
+    addAlertToEval(evaluationId: ID!, alertId: ID!): Evaluation
   }
 `;
+
+const alertsDatabase = [
+  {
+    id: "A",
+  },
+  {
+    id: "B",
+  },
+  {
+    id: "C",
+  },
+  {
+    id: "D",
+  },
+];
 
 // default values to seed KV storage, not used every time
 const usersDatabase = [
@@ -30,7 +48,7 @@ const usersDatabase = [
     evaluations: [
       {
         id: "123123",
-        alerts: ["A", "B"],
+        alerts: [{ id: "A" }, { id: "B" }],
       },
     ],
   },
@@ -48,6 +66,7 @@ const usersDatabase = [
 const resolvers = {
   Query: {
     users: async () => {
+      //   await kv.set("users", usersDatabase);
       return await kv.get("users");
     },
     userById: async (_ctx: any, variables: any) => {
@@ -61,7 +80,7 @@ const resolvers = {
       const evals = usersDb.flatMap((e) => e.evaluations);
       const ev = evals.find((e) => e.id === variables.evaluationId);
       if (!ev) throw new Error("no evaluation");
-      ev.alerts = ev.alerts.filter((a) => a !== variables.alert);
+      ev.alerts = ev.alerts.filter((a) => a.id !== variables.alertId);
       await kv.set("users", usersDb);
       return ev;
     },
@@ -71,8 +90,8 @@ const resolvers = {
       const ev = evals.find((e) => e.id === variables.evaluationId);
       if (!ev) throw new Error("no evaluation");
       ev.alerts = [
-        variables.alert,
-        ...(ev?.alerts.filter((a) => a !== variables.alert) || []),
+        { id: variables.alertId },
+        ...(ev?.alerts.filter((a) => a.id !== variables.alertId) || []),
       ];
       await kv.set("users", usersDb);
       return ev;

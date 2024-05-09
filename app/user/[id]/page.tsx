@@ -9,10 +9,10 @@ import { useApolloClient } from "@apollo/client";
 import { useParams } from "next/navigation";
 
 const AddMutator = ({
-  alert,
+  alertId,
   evaluationId,
 }: {
-  alert: string;
+  alertId: string;
   evaluationId: string;
 }) => {
   const addMutator = useAddAlertMutation();
@@ -22,22 +22,22 @@ const AddMutator = ({
         addMutator[0]({
           variables: {
             evaluationId,
-            alert,
+            alertId,
           },
         });
       }}
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     >
-      Add {alert}
+      Add {alertId}
     </button>
   );
 };
 
 const DropMutator = ({
-  alert,
+  alertId,
   evaluationId,
 }: {
-  alert: string;
+  alertId: string;
   evaluationId: string;
 }) => {
   const dropMutator = useDropAlertMutation();
@@ -47,13 +47,13 @@ const DropMutator = ({
         dropMutator[0]({
           variables: {
             evaluationId,
-            alert,
+            alertId,
           },
         });
       }}
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
     >
-      Drop {alert}
+      Drop {alertId}
     </button>
   );
 };
@@ -77,8 +77,12 @@ export default function Page() {
           <div key={e?.id}>
             Evaluation: {e?.id} Alerts: {JSON.stringify(e?.alerts)}
             <div className="flex flex-row gap-2">
-              <DropMutator alert={"A"} evaluationId={e?.id!} />
-              <AddMutator alert="A" evaluationId={e?.id!} />
+              <DropMutator alertId={"A"} evaluationId={e?.id!} />
+              <AddMutator alertId="A" evaluationId={e?.id!} />
+            </div>
+            <div className="flex flex-row gap-2">
+              <DropMutator alertId={"B"} evaluationId={e?.id!} />
+              <AddMutator alertId="B" evaluationId={e?.id!} />
             </div>
           </div>
         ))}

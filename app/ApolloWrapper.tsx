@@ -11,7 +11,19 @@ const apolloClient = new ApolloClient({
   link: new HttpLink({
     uri: process.env.NEXT_PUBLIC_GQL_URI || "http://localhost:3000/api/gql",
   }),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: {
+      Evaluation: {
+        fields: {
+          alerts: {
+            merge(_existing: any[], incoming: any[]) {
+              return incoming;
+            },
+          },
+        },
+      },
+    },
+  }),
   connectToDevTools: true,
 });
 
