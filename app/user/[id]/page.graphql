@@ -1,0 +1,33 @@
+query GetUsers {
+  users {
+    id
+    evaluations {
+      id
+      alerts
+    }
+  }
+}
+
+query GetUser($id: String!) {
+  userById(id: $id) {
+    id
+    evaluations {
+      id
+      alerts
+    }
+  }
+}
+
+mutation AddAlert($evaluationId: String!, $alert: String!) {
+  addAlertToEval(evaluationId: $evaluationId, alert: $alert) {
+    id
+    alerts
+  }
+}
+
+mutation DropAlert($evaluationId: String!, $alert: String!) {
+  dropAlertFromEval(evaluationId: $evaluationId, alert: $alert) {
+    id
+    alerts
+  }
+}
