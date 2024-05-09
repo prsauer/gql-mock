@@ -23,6 +23,7 @@ const typeDefs = gql`
   }
 `;
 
+// default values to seed KV storage, not used every time
 const usersDatabase = [
   {
     id: "123",
