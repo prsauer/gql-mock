@@ -9,7 +9,7 @@ import {
 
 const apolloClient = new ApolloClient({
   link: new HttpLink({
-    uri: "http://localhost:3000/api/gql",
+    uri: process.env.NEXT_PUBLIC_GQL_URI || "http://localhost:3000/api/gql",
   }),
   cache: new InMemoryCache(),
   connectToDevTools: true,
